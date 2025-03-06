@@ -16,28 +16,16 @@ export const TodoList = () => {
   const [todosData, setTodosData] = useState<Todo[]>([]);
   const [selectedType, setSelectedType] = useState("All");
 
+  // updating redux todos slice with local storage todos
   useEffect(() => {
     const localStorageTodos = localStorage.getItem("todos");
-
     if (localStorageTodos) {
       dispatch(copyFromLocalStorage(JSON.parse(localStorageTodos)));
     }
   }, [dispatch]);
 
-  // useEffect(() => {
-  //   console.log("todos: ", todos);
-  //   const data = selectedType === "Completed"
-  //   ? todos.filter((todo) => todo.completed)
-  //   : selectedType === "Pending"
-  //   ? todos.filter((todo) => !todo.completed)
-  //   : todos
-
-  //   setTodosData(data.toSorted((a, b) => a.dueDate - b.dueDate));
-  // }, [todos, selectedType]);
-
+  // updating local todo state once redux todo slice updates
   useEffect(() => {
-    console.log("todos: ", todos);
-
     const filteredTodos =
       selectedType === "Completed"
         ? todos.filter((todo) => todo.completed)
